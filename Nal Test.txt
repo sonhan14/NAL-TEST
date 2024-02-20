@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Nhập chuỗi chữ cái latin: ");
+        String input = scanner.nextLine();
+        scanner.close();
+
+        int count = countVietnameseCharacters(input);
+        System.out.println("Số lượng chữ cái Tiếng Việt có thể được tạo ra: " + count);
+    }
+
+    public static int countVietnameseCharacters(String input) {
+        int count = 0;
+        for (int i = 0; i < input.length(); i++) {
+            if (isVietnameseCharacter(input, i)) {
+                count++;
+                i++; // Di chuyển thêm một lần nữa để bỏ qua ký tự tiếp theo của cặp ký tự
+            }
+        }
+        return count;
+    }
+
+    public static boolean isVietnameseCharacter(String input, int index) {
+        if (index + 1 >= input.length()) {
+            return false; // Không đủ ký tự để kiểm tra cặp
+        }
+        
+        char currentChar = input.charAt(index);
+        char nextChar = input.charAt(index + 1);
+        
+        return ((currentChar == 'a' && nextChar == 'w') ||
+                (currentChar == 'a' && nextChar == 'a') ||
+                (currentChar == 'd' && nextChar == 'd') ||
+                (currentChar == 'e' && nextChar == 'e') ||
+                (currentChar == 'o' && nextChar == 'o') ||
+                (currentChar == 'o' && nextChar == 'w') ||
+                (currentChar == 'w'));
+    }
+}
